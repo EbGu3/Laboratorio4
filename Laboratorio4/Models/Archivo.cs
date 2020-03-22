@@ -55,6 +55,7 @@ namespace Laboratorio4.Models
         public void AgregandoNuevasCombinaciones()
         {
             var Palabra = "";
+            var TextoCompartir = "";
             var i = 0;
             var numero = TablaCaracteres.Count;
             bool FinLinea = false;
@@ -69,19 +70,26 @@ namespace Laboratorio4.Models
                         while (TablaCaracteres.ContainsKey(Palabra) == true && (FinLinea==false))
                         {
                            
-                            numero++;
+                           
                             i++;
                             if (i < item.Length) { Palabra += item[i]; }
-                            else { FinLinea = true; }
+                            else {
+                                FinLinea = true;
+                                TextoCompartir += TablaCaracteres[item[i - 1].ToString()];
+                            }
   
                         }
-                        if(TablaCaracteres.ContainsKey(Palabra)==false)
-                        {
+                        if(TablaCaracteres.ContainsKey(Palabra)==false){
+                            numero++;
                             TablaCaracteres.Add(Palabra, numero);
+                           
+                            TextoCompartir += TablaCaracteres[Palabra.TrimEnd(item[i])].ToString()  + ",";
+                            
                         }
                        
                     }
                     
+
                 }
                 FinLinea = false;
                 i = 0;
