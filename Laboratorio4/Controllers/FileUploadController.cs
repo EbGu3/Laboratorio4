@@ -16,6 +16,7 @@ namespace Laboratorio4.Controllers
     public class FileUploadController : ControllerBase
     {
         public static IWebHostEnvironment _environment;
+        public string Path;
         Archivo archivo = new Archivo();
 
         public FileUploadController(IWebHostEnvironment environment)
@@ -23,10 +24,7 @@ namespace Laboratorio4.Controllers
             _environment = environment;
         }
 
-        public class FileUploadAPI
-        {
-            public IFormFile files { get; set; }
-        }
+      
 
         public async Task<string> Post(FileUploadAPI objFile)
         {
@@ -46,13 +44,14 @@ namespace Laboratorio4.Controllers
                         fileStream.Flush();
 
 
-
-                        
-                        return "\\Upload\\" + objFile.files.FileName;
+                        Path = "Upload" + objFile.files.FileName;
 
                     }
 
-
+                    archivo.LeerArchivoTexto(Path);
+                    archivo.ObtenerCaracteresBase();
+                    archivo.AgregandoNuevasCombinaciones();
+                    return objFile.files.Name;
 
                 }
                 else

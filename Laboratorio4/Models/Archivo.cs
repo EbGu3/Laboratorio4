@@ -6,38 +6,77 @@ namespace Laboratorio4.Models
 {
     public class Archivo
     {
-        private Dictionary<char, int> TablaCaracteres { get; set; }
+        private Dictionary<string, int> TablaCaracteres { get; set; }
         private List<string> ListaTexto { get; set; } 
         public const int TamañoBuffer = 1040;
         
 
         public Archivo()
         {
-            TablaCaracteres = new Dictionary<char, int>();
+            TablaCaracteres = new Dictionary<string, int>();
             ListaTexto = new List<string>();
         }
 
 
-        public void LeerArchivoTexto(FileStream fileStream)
-        {
-            char[] Buffer = new char[TamañoBuffer];
+        public void LeerArchivoTexto(string Name)
+        { 
             var LineaLeida = "";
             var i = 0;
-            using(var sr = new StreamReader("//Users//eber.g//Downloads//PRUEBAS//Prue.txt"))
+            using(var sr = new StreamReader(Name))
             {
                 //Mandar bloques de texto
                 LineaLeida = sr.ReadLine();
                 while( LineaLeida != null)
                 {
-                    LineaLeida=(sr.ReadBlock(Buffer, i, TamañoBuffer)).ToString();
-                    i += TamañoBuffer;
+                    ListaTexto.Add(LineaLeida);
                     LineaLeida = sr.ReadLine();
+                    i++;
                 }
-               
             }
         }
-        public void ObtenerCaracteresBase(string Characteres)
+        public void ObtenerCaracteresBase()
+        {   var i = 0;
+            var num = 1;
+            foreach (var item in ListaTexto)
+            {
+                while(i < item.Length)
+                {
+                    if (TablaCaracteres.ContainsKey(item[i].ToString()) == false)
+                    {
+                        TablaCaracteres.Add(item[i].ToString(), num);
+                        num++;
+                    }
+                    i++;
+                }
+                i = 0;
+            }
+        }
+
+        public void AgregandoNuevasCombinaciones()
         {
+            var Palabra = "";
+            var i = 0;
+            var numero = TablaCaracteres.Count;
+
+            foreach (var item in ListaTexto)
+            {
+                while (i < item.Length)
+                {
+                    if (TablaCaracteres.ContainsKey(item[i].ToString()) == true)
+                    {
+                        Palabra = item[i].ToString();
+                        while (TablaCaracteres.ContainsKey(Palabra) == true)
+                        {
+                           
+                            numero++;
+                            i++;
+                            Palabra += item[i];
+                        }
+                        TablaCaracteres.Add(Palabra, numero);
+                    }
+                }
+                i = 0;
+            }
 
         }
     }
