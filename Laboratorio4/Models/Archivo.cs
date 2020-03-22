@@ -57,6 +57,7 @@ namespace Laboratorio4.Models
             var Palabra = "";
             var i = 0;
             var numero = TablaCaracteres.Count;
+            bool FinLinea = false;
 
             foreach (var item in ListaTexto)
             {
@@ -65,16 +66,24 @@ namespace Laboratorio4.Models
                     if (TablaCaracteres.ContainsKey(item[i].ToString()) == true)
                     {
                         Palabra = item[i].ToString();
-                        while (TablaCaracteres.ContainsKey(Palabra) == true)
+                        while (TablaCaracteres.ContainsKey(Palabra) == true && (FinLinea==false))
                         {
                            
                             numero++;
                             i++;
-                            Palabra += item[i];
+                            if (i < item.Length) { Palabra += item[i]; }
+                            else { FinLinea = true; }
+  
                         }
-                        TablaCaracteres.Add(Palabra, numero);
+                        if(TablaCaracteres.ContainsKey(Palabra)==false)
+                        {
+                            TablaCaracteres.Add(Palabra, numero);
+                        }
+                       
                     }
+                    
                 }
+                FinLinea = false;
                 i = 0;
             }
 
