@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Laboratorio4.Models;
+using System;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -51,6 +51,8 @@ namespace Laboratorio4.Controllers
                     archivo.LeerArchivoTexto(Path);
                     archivo.ObtenerCaracteresBase();
                     archivo.AgregandoNuevasCombinaciones();
+                    var a = archivo.n();
+                    archivo.Comprimir();
                     return objFile.files.Name;
 
                 }
